@@ -1,0 +1,4 @@
+.env*
+DATA/**/.*
+DATA/**/*
+*.txt

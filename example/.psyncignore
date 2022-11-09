@@ -1,0 +1,4 @@
+to-be-ignored.txt
+DATA/folder-to-be-ignored
+any-data.json
+DATA/some-inside-to-be-ignored/other-data*

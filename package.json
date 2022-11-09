@@ -1,0 +1,27 @@
+{
+  "name": "prj-sync",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bin/index.js",
+  "type": "module",
+  "bin": {
+    "prj-sync": "./bin/index.js"
+  },
+  "scripts": {
+    "dev": "node bin/index.js",
+    "example": "pnpm dev -s example -d data-out",
+    "example-overwrite": "pnpm dev -s example -d data-out -w",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Luca Pulira (lp741)",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^5.1.2",
+    "fs-extra": "^10.1.0",
+    "glob": "^8.0.3",
+    "glob-promise": "^5.0.0",
+    "ignore": "^5.2.0",
+    "parse-gitignore": "^2.0.0",
+    "yargs": "^17.6.2"
+  }
+}
