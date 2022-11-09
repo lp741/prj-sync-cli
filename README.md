@@ -39,3 +39,37 @@ pnpm test
 
 yarn test
 ```
+
+
+### Configuration
+
+Includes paths and files
+
+```gitignore
+#.psyncrc
+.env*
+DATA/**/.*
+DATA/**/*
+*.txt
+```
+
+Ignores sub paths and files
+
+```gitignore
+#.psyncignore
+to-be-ignored.txt
+DATA/folder-to-be-ignored
+any-data.json
+DATA/some-inside-to-be-ignored/other-data*
+```
+
+
+### Usage
+
+```bash
+prj-sync -s example -d data-out
+
+# or disable overwrite
+
+prj-sync -s example -d data-out --no-w 
+```
