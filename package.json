@@ -1,6 +1,6 @@
 {
   "name": "prj-sync",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "CLI prj-sync allows you to synchronize folders and files using Gitignore configuration files like.",
   "author": "Luca Pulira (lp741)",
   "license": "MIT",
@@ -9,6 +9,16 @@
   "bin": {
     "prj-sync": "./bin/index.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lp741/prj-sync-cli.git"
+  },
+  "keywords": [
+    "synchronization",
+    "filesystem",
+    "nodejs",
+    "CLI"
+  ],
   "scripts": {
     "dev": "node bin/index.js",
     "test:clear": "rm -Rf data-out",
