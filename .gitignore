@@ -217,4 +217,6 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-data-out
+data-out*
+
+!example/.env

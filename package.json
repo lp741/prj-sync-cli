@@ -1,7 +1,9 @@
 {
   "name": "prj-sync",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.1.1",
+  "description": "CLI prj-sync allows you to synchronize folders and files using Gitignore configuration files like.",
+  "author": "Luca Pulira (lp741)",
+  "license": "MIT",
   "main": "bin/index.js",
   "type": "module",
   "bin": {
@@ -9,19 +11,28 @@
   },
   "scripts": {
     "dev": "node bin/index.js",
-    "example": "pnpm dev -s example -d data-out",
-    "example-overwrite": "pnpm dev -s example -d data-out -w",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test:clear": "rm -Rf data-out",
+    "test:cli": "pnpm dev -s example -d data-out --no-w -v",
+    "test:cli:overwrite": "pnpm dev -s example -d data-out -v",
+    "test:ui": "vitest --ui",
+    "test:watch": "vitest --watch",
+    "coverage": "vitest run --coverage",
+    "test": "vitest"
   },
-  "author": "Luca Pulira (lp741)",
-  "license": "MIT",
   "dependencies": {
     "chalk": "^5.1.2",
     "fs-extra": "^10.1.0",
     "glob": "^8.0.3",
     "glob-promise": "^5.0.0",
     "ignore": "^5.2.0",
+    "lodash": "^4.17.21",
     "parse-gitignore": "^2.0.0",
+    "typescript": "^4.8.4",
     "yargs": "^17.6.2"
+  },
+  "devDependencies": {
+    "@vitest/coverage-istanbul": "^0.25.1",
+    "@vitest/ui": "^0.25.1",
+    "vitest": "^0.25.1"
   }
 }

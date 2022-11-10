@@ -1,38 +1,46 @@
 # Project Sync (prj-sync) CLI
 
-command line script to copy and sync environments configuration and local data of development projects
+CLI prj-sync allows you to synchronize folders and files using Gitignore configuration files like.
 
 
 ### Install
-```
+```bash
 npm install -g .
 ```
 
+### Configuration
+
+create `.psyncrc` and `.psyncignore` follow [.gitignore](https://git-scm.com/docs/gitignore) pattern format 
+
 ### Usage
 
-```
-prj-sync
+```bash
+prj-sync -s example -d data-out
+
+# or disable overwrite
+
+prj-sync -s example -d data-out --no-w 
 ```
 
 ### Uninstall
-```
+```bash
 npm uninstall -g prj-sync
 ```
 
 ### Run dev mode
 
-```
-npm run dev
+```bash
+npm run dev -s example -d data-out [--no-w]
 
-pnpm dev
+pnpm dev -s example -d data-out [--no-w]
 
-yarn dev
+yarn dev -s example -d data-out [--no-w]
 ```
 
 
 ### Run tests
 
-```
+```bash
 npm run test
 
 pnpm test
@@ -40,8 +48,14 @@ pnpm test
 yarn test
 ```
 
+if you like vitest UI you can launch it by
 
-### Configuration
+```bash
+pnpm test:ui
+```
+
+### Example
+Add following files to your project root
 
 Includes paths and files
 
@@ -63,13 +77,29 @@ any-data.json
 DATA/some-inside-to-be-ignored/other-data*
 ```
 
-
-### Usage
-
 ```bash
-prj-sync -s example -d data-out
+$ prj-sync -s example -d data-out -v
 
-# or disable overwrite
+Reading files to sync from .psyncrc presents in example folder 
 
-prj-sync -s example -d data-out --no-w 
+Reading files to be ignored from .psyncignore presents in example folder 
+
+Syncing folder destination data-out 
+
+items to be synced count 6
+Folders and files to sync 
+ [
+  'example/.env',
+  'example/DATA/some-inside-to-be-ignored/.env.local',
+  'example/DATA/some-inside-to-be-ignored/.to-be-included',
+  'example/DATA/sample-data.json',
+  'example/DATA/some-inside-to-be-ignored/this-should-be-included.json',
+  'example/other-data.txt'
+] 
+
+
+ items synced count 6  overwrite 
+
+DONE ✓ 
+
 ```

@@ -1,6 +1,8 @@
 import ignore from 'ignore'
 import glob from 'glob-promise'
 import fs from 'fs-extra'
+import fsSystem from 'fs'
+import chalk from "chalk"
 
 /**
  *
@@ -36,10 +38,11 @@ const listFiles = async (pattern, sourceFolder = '.') => {
  *
  * @param sourceList {Array<string>}
  * @param pattern {Array<string>|string}
+ * @param sourceFolder {Array<string>|string}
  *
  * @returns {Array<String>}
  */
-const filterIgnoredFiles = (sourceList, pattern) => {
+const filterIgnoredFiles = (sourceList, pattern, sourceFolder) => {
   const patters = []
   if (!Array.isArray(pattern)) {
     patters.push(pattern)
@@ -47,7 +50,13 @@ const filterIgnoredFiles = (sourceList, pattern) => {
     patters.push(...pattern)
   }
 
-  return ignore().add(patters).filter(sourceList)
+  const matchingPaths = ignore().add(patters).filter(sourceList)
+  return matchingPaths.map((el) => {
+    return `${sourceFolder}/${el}`
+  }).filter((fullPath) => {
+    const isDirectory = fsSystem.lstatSync(fullPath).isDirectory()
+    return !isDirectory
+  })
 }
 
 /**
@@ -58,17 +67,26 @@ const filterIgnoredFiles = (sourceList, pattern) => {
  * @param filesList {Array<string>}
  * @param destinationFolder {string}
  * @param overwrite {boolean}
+ * @param verbose {boolean}
  *
  * @return {Promise<int>}
  */
-const syncFiles = async (filesList, destinationFolder, overwrite= false) => {
+const syncFiles = async (filesList, destinationFolder, overwrite= false, verbose = false) => {
   let count = 0
+  fs.ensureDirSync(`${ destinationFolder }`)
+
   for (const fileName of filesList) {
     try {
-      await fs.copy(fileName, `${ destinationFolder }/${ fileName }`, { overwrite: !!overwrite, errorOnExist: true })
-      count++
+      // ensure to not copy empty or full directory
+      const isDirectory = fsSystem.lstatSync(fileName).isDirectory()
+      if (!isDirectory) {
+        await fs.copy(fileName, `${ destinationFolder }/${ fileName }`, { overwrite: !!overwrite, errorOnExist: true })
+        count++
+      }
     } catch (e) {
-      console.error(e)
+      if (verbose) {
+        console.log(`- Sync error: ${ chalk.redBright(e.message) }`);
+      }
     }
   }
   return count

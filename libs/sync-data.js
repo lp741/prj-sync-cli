@@ -2,6 +2,7 @@ import chalk from "chalk"
 import { PRJ_SYNC_IGNORE_FILE, PRJ_SYNC_RC_FILE } from "./constants.js"
 import { parseConfigFile } from "./config-parser.js"
 import { filterIgnoredFiles, listFiles, syncFiles } from "./folder-parser.js"
+import fsSystem from "fs"
 
 /**
  *
@@ -19,21 +20,17 @@ async function execute (options) {
   // Sync files and folder to destination
   console.log(`Syncing folder ${ chalk.green.bold('destination') } ${ chalk.blueBright(options.destinationFolder) }`, "\n");
   const fileList = await listFiles(readList, options.sourceFolder)
-  const filteredList = filterIgnoredFiles(fileList, ignoreList)
+  const filteredList = filterIgnoredFiles(fileList, ignoreList, options.sourceFolder)
 
   console.log(`items to be synced count ${chalk.blueBright(filteredList.length)}`)
 
   if (options.verbose) {
-    console.log('Folders and files to sync', "\n", filteredList);
+    console.log('Folders and files to sync', "\n", filteredList, "\n");
   }
 
-  const fullPathFilteredFiles = filteredList.map((el) => {
-    return `${options.sourceFolder}/${el}`
-  })
+  const syncedFiles = await syncFiles(filteredList, options.destinationFolder, options.overwrite, options.verbose)
 
-  const syncedFiles = await syncFiles(fullPathFilteredFiles, options.destinationFolder, options.overwrite)
-
-  console.log(`items synced count ${chalk.blueBright(syncedFiles)} ${options.overwrite ? chalk.redBright(' overwrite') : ''}`)
+  console.log("\n", `items synced count ${chalk.blueBright(syncedFiles)} ${options.overwrite ? chalk.redBright(' overwrite') : ''}`, "\n")
 }
 
 export { execute }
