@@ -5,7 +5,7 @@ CLI prj-sync allows you to synchronize folders and files using Gitignore configu
 
 ### Install
 ```bash
-npm install -g .
+npm install -g prj-sync
 ```
 
 ### Configuration
