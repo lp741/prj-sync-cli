@@ -1,9 +1,12 @@
 #!/usr/bin/env node
-import config from '../package.json'
 import chalk from "chalk"
+import fs from 'fs'
 import yargs from 'yargs/yargs'
 import { hideBin } from 'yargs/helpers'
 import { execute } from "../libs/sync-data.js"
+
+const loadJSON = (path) => JSON.parse(fs.readFileSync(new URL(path, import.meta.url)));
+const config = loadJSON('../package.json');
 
 const options = yargs(hideBin(process.argv))
   .usage('Usage: prj-sync [-s <source-folder>] -d <destination-forder>')
@@ -31,7 +34,7 @@ const options = yargs(hideBin(process.argv))
     default: true,
     type: 'boolean'
   })
-  .epilog(`v.${config.version}`)
+  .epilog(`prj-sync v.${config.version}`)
   .argv;
 
 try {
