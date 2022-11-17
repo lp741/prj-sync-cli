@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import config from '../package.json'
 import chalk from "chalk"
 import yargs from 'yargs/yargs'
 import { hideBin } from 'yargs/helpers'
@@ -30,7 +31,7 @@ const options = yargs(hideBin(process.argv))
     default: true,
     type: 'boolean'
   })
-  .epilog('copyright 2022')
+  .epilog(`v.${config.version}`)
   .argv;
 
 try {
