@@ -6,7 +6,7 @@ import { execute } from "../libs/sync-data.js"
 
 const options = yargs(hideBin(process.argv))
   .usage('Usage: prj-sync [-s <source-folder>] -d <destination-forder>')
-  .command('prj-sync', 'Sync project envs and data')
+  .command('prj-sync', 'Sync project envs and data, add .psyncrc and .psyncignore to your project root.')
   .example('prj-sync -s ./example -d ~/Works/DATA/MyProject', 'Sync project envs and data with files present in output folder, or create if they don\'t exists')
   .option('sourceFolder', {
     alias: 's',
